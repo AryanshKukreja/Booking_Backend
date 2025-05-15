@@ -134,10 +134,17 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
-# Add your Render frontend URL or any other production URLs here
-render_frontend_url = os.environ.get('RENDER_FRONTEND_URL')
-if render_frontend_url:
-    CORS_ALLOWED_ORIGINS.append(render_frontend_url)
+# Add your Render domains or any production frontend URLs
+if os.environ.get('RENDER_EXTERNAL_URL'):
+    CORS_ALLOWED_ORIGINS.append(os.environ.get('RENDER_EXTERNAL_URL'))
+
+# If you have a specific frontend URL, add it here
+frontend_url = os.environ.get('FRONTEND_URL')
+if frontend_url:
+    CORS_ALLOWED_ORIGINS.append(frontend_url)
+
+# For development/testing purposes, you can set this to True, but it's less secure
+# CORS_ALLOW_ALL_ORIGINS = False
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
